@@ -180,13 +180,15 @@ public final class TagUIView: UIView {
         theme: any Theme,
         intent: TagIntent,
         variant: TagVariant,
-        iconImage: UIImage
+        iconImage: UIImage,
+        removeShapeFeatureToggle: Bool = false
     ) {
         self.init(
             theme,
             intent: intent,
             variant: variant,
-            iconImage: iconImage
+            iconImage: iconImage,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 
@@ -200,13 +202,15 @@ public final class TagUIView: UIView {
         theme: any Theme,
         intent: TagIntent,
         variant: TagVariant,
-        text: String
+        text: String,
+        removeShapeFeatureToggle: Bool = false
     ) {
         self.init(
             theme,
             intent: intent,
             variant: variant,
-            text: text
+            text: text,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 
@@ -220,13 +224,15 @@ public final class TagUIView: UIView {
         theme: any Theme,
         intent: TagIntent,
         variant: TagVariant,
-        attributedText: NSAttributedString
+        attributedText: NSAttributedString,
+        removeShapeFeatureToggle: Bool = false
     ) {
         self.init(
             theme,
             intent: intent,
             variant: variant,
-            text: attributedText
+            text: attributedText,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 
@@ -242,14 +248,16 @@ public final class TagUIView: UIView {
         intent: TagIntent,
         variant: TagVariant,
         iconImage: UIImage,
-        text: String
+        text: String,
+        removeShapeFeatureToggle: Bool = false
     ) {
         self.init(
             theme,
             intent: intent,
             variant: variant,
             iconImage: iconImage,
-            text: text
+            text: text,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 
@@ -265,14 +273,16 @@ public final class TagUIView: UIView {
         intent: TagIntent,
         variant: TagVariant,
         iconImage: UIImage,
-        attributedText: NSAttributedString
+        attributedText: NSAttributedString,
+        removeShapeFeatureToggle: Bool = false
     ) {
         self.init(
             theme,
             intent: intent,
             variant: variant,
             iconImage: iconImage,
-            text: attributedText
+            text: attributedText,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 
@@ -282,6 +292,7 @@ public final class TagUIView: UIView {
         variant: TagVariant,
         iconImage: UIImage? = nil,
         text: Any? = nil,
+        removeShapeFeatureToggle: Bool = false,
         getColorsUseCase: any TagGetColorsUseCaseable = TagGetColorsUseCase()
     ) {
         self.theme = theme

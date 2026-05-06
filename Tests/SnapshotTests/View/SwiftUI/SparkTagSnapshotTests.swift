@@ -24,29 +24,29 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
     // MARK: - Tests
 
     func test() {
-        let forDocumentation = false
-
-        let scenarios = TagScenarioSnapshotTests.allCases(forDocumentation: forDocumentation)
+        let scenarios = TagScenarioSnapshotTests.allCases
 
         for scenario in scenarios {
             let configurations = scenario.configuration(isSwiftUIComponent: true)
             for configuration in configurations {
                 let view = self.component(configuration: configuration)
+                    .sparkTheme(self.theme)
                     .sparkTagIntent(configuration.intent)
                     .sparkTagSize(configuration.size)
                     .sparkTagVariant(configuration.variant)
                     .sparkTagIsHighlighted(configuration.isHighlighted)
                     .sparkFrame(width: configuration.width)
-                    .padding(4)
                     .fixedSize()
-                    .padding(10)
+                    .padding(25)
                     .background(.background)
 
                 self.assertSnapshot(
                     matching: view,
+                    named: configuration.name,
                     modes: configuration.modes,
                     sizes: configuration.sizes,
-                    testName: configuration.testName()
+                    testName: configuration.testName,
+                    forDocumentation: scenario.isDocumentation
                 )
             }
         }
@@ -56,8 +56,8 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
     func component(configuration: TagConfigurationSnapshotTests) -> some View {
         if configuration.isIcon, configuration.content == .other {
             SparkTag(
-                theme: self.theme,
                 icon: .mock,
+                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                 label: {
                     Group {
                         Text("My Tag ") +
@@ -70,7 +70,7 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
         } else if !configuration.isIcon, configuration.content == .other {
             SparkTag(
-                theme: self.theme,
+                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                 label: {
                     Group {
                         Text("My Tag ") +
@@ -85,19 +85,19 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
             SparkTag(
                 text,
                 icon: .mock,
-                theme: self.theme
+                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
             )
 
         } else if configuration.isIcon {
             SparkTag(
-                theme: self.theme,
-                icon: .mock
+                icon: .mock,
+                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
             )
 
         } else {
             SparkTag(
                 configuration.content.text ?? "Unknow",
-                theme: self.theme
+                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
             )
         }
     }

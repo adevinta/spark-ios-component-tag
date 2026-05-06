@@ -16,7 +16,7 @@ protocol TagGetBorderUseCaseable {
     func execute(
         theme: any Theme,
         size: TagSize,
-        variant: TagVariant
+        removeShapeFeatureToggle: Bool
     ) -> TagBorder
 }
 
@@ -27,16 +27,17 @@ final class TagGetBorderUseCase: TagGetBorderUseCaseable {
     func execute(
         theme: any Theme,
         size: TagSize,
-        variant: TagVariant
+        removeShapeFeatureToggle: Bool
     ) -> TagBorder {
         let border = theme.border
 
         let width = border.width.small
-
-        let radius = switch size {
-        case .medium: border.radius.full
-        case .large: border.radius.medium
-        }
+        let radius: CGFloat = removeShapeFeatureToggle ? border.radius.small : {
+            return switch size {
+            case .medium: border.radius.full
+            case .large: border.radius.medium
+            }
+        }()
 
         return .init(width: width, radius: radius)
     }

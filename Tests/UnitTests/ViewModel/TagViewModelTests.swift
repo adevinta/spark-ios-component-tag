@@ -10,8 +10,8 @@ import XCTest
 @testable import SparkComponentTag
 @_spi(SI_SPI) @testable import SparkComponentTagTesting
 @_spi(SI_SPI) import SparkCommon
-import SparkTheming
 @_spi(SI_SPI) import SparkThemingTesting
+@_spi(SI_SPI) import SparkTheming
 import SwiftUI
 
 final class TagViewModelTests: XCTestCase {
@@ -21,15 +21,21 @@ final class TagViewModelTests: XCTestCase {
     func test_initialization_shouldUseDefaultValues() {
         // GIVEN / WHEN
         let stub = Stub()
+        let viewModel = stub.viewModel
 
         // THEN
+        XCTAssertNil(viewModel.theme)
+        XCTAssertNil(viewModel.intent)
+        XCTAssertNil(viewModel.size)
+        XCTAssertNil(viewModel.variant)
+
         XCTAssertEqualToExpected(
             on: stub,
             otherBorder: .init(),
             otherColors: .init(),
             otherSpacings: .init(),
-            otherHeight: true,
-            otherTextFont: .body
+            otherHeight: .zero,
+            otherTextFontToken: TypographyFontTokenClear()
         )
 
         // UseCase Calls Count
@@ -63,7 +69,7 @@ final class TagViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenSize: stub.givenSize,
-            givenVariant: stub.givenVariant,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -94,7 +100,7 @@ final class TagViewModelTests: XCTestCase {
             stub.getTextFontUseCaseMock,
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
-            expectedReturnValue: stub.expectedTextFont
+            expectedReturnValue: stub.expectedTextFontToken
         )
         // **
     }
@@ -129,7 +135,7 @@ final class TagViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: givenTheme,
             givenSize: stub.givenSize,
-            givenVariant: stub.givenVariant,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -153,7 +159,7 @@ final class TagViewModelTests: XCTestCase {
             stub.getTextFontUseCaseMock,
             expectedNumberOfCalls: 1,
             givenTheme: givenTheme,
-            expectedReturnValue: stub.expectedTextFont
+            expectedReturnValue: stub.expectedTextFontToken
         )
         // **
     }
@@ -225,7 +231,7 @@ final class TagViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenSize: givenSize,
-            givenVariant: stub.givenVariant,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -258,18 +264,10 @@ final class TagViewModelTests: XCTestCase {
         // UseCase Calls Count
         XCTAssertNotCalled(
             on: stub,
+            getBorder: true,
             getHeight: true,
             getSpacings: true,
             getTextFont: true
-        )
-
-        TagGetBorderUseCaseableMockTest.XCTAssert(
-            stub.getBorderUseCaseMock,
-            expectedNumberOfCalls: 1,
-            givenTheme: stub.givenTheme,
-            givenSize: stub.givenSize,
-            givenVariant: givenVariant,
-            expectedReturnValue: stub.expectedBorder
         )
 
         TagGetColorsUseCaseableMockTest.XCTAssert(
@@ -283,7 +281,77 @@ final class TagViewModelTests: XCTestCase {
         // **
     }
 
-    func test_allSetter_exceptTheme_withoutChange() {
+    func test_removeShapeFeatureToggle_shouldUpdate_border() {
+        // GIVEN
+        let stub = Stub()
+        let viewModel = stub.viewModel
+
+        viewModel.setup(stub: stub)
+        stub.resetMockedData()
+
+        let givenRemoveShapeFeatureToggle = true
+
+        // WHEN
+        viewModel.removeShapeFeatureToggle = givenRemoveShapeFeatureToggle
+
+        // THEN
+        XCTAssertEqualToExpected(on: stub)
+
+        // **
+        // UseCase Calls Count
+        XCTAssertNotCalled(
+            on: stub,
+            getColors: true,
+            getHeight: true,
+            getSpacings: true,
+            getTextFont: true
+        )
+
+        TagGetBorderUseCaseableMockTest.XCTAssert(
+            stub.getBorderUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: stub.givenTheme,
+            givenSize: stub.givenSize,
+            givenRemoveShapeFeatureToggle: givenRemoveShapeFeatureToggle,
+            expectedReturnValue: stub.expectedBorder
+        )
+        // **
+    }
+
+    func test_propertiesChanged_beforeSetup_shouldNotCallUseCases() {
+        // GIVEN
+        let stub = Stub()
+        let viewModel = stub.viewModel
+
+        // WHEN
+        viewModel.theme = ThemeGeneratedMock.mocked()
+        viewModel.intent = stub.givenIntent
+        viewModel.size = stub.givenSize
+        viewModel.variant = stub.givenVariant
+        viewModel.removeShapeFeatureToggle = stub.givenRemoveShapeFeatureToggle
+
+        // THEN
+        XCTAssertEqualToExpected(
+            on: stub,
+            otherBorder: .init(),
+            otherColors: .init(),
+            otherSpacings: .init(),
+            otherHeight: .zero,
+            otherTextFontToken: TypographyFontTokenClear()
+        )
+
+        // UseCase Calls Count
+        XCTAssertNotCalled(
+            on: stub,
+            getBorder: true,
+            getColors: true,
+            getHeight: true,
+            getSpacings: true,
+            getTextFont: true
+        )
+    }
+
+    func test_propertiesChanged_withoutValueChange_shouldNotCallUseCases() {
         // GIVEN
         let stub = Stub()
         let viewModel = stub.viewModel
@@ -292,9 +360,11 @@ final class TagViewModelTests: XCTestCase {
         stub.resetMockedData()
 
         // WHEN
+        viewModel.theme = stub.givenTheme
         viewModel.intent = stub.givenIntent
         viewModel.size = stub.givenSize
         viewModel.variant = stub.givenVariant
+        viewModel.removeShapeFeatureToggle = stub.givenRemoveShapeFeatureToggle
 
         // THEN
         XCTAssertEqualToExpected(on: stub)
@@ -310,25 +380,23 @@ final class TagViewModelTests: XCTestCase {
         )
     }
 
-    func test_allSetter_exceptTheme_withoutSetupBefore() {
+    func test_propertiesChanged_withNilValues_shouldNotCallUseCases() {
         // GIVEN
         let stub = Stub()
         let viewModel = stub.viewModel
 
+        viewModel.setup(stub: stub)
+        stub.resetMockedData()
+
         // WHEN
-        viewModel.intent = .accent
-        viewModel.size = .medium
-        viewModel.variant = .filled
+        viewModel.theme = nil
+        viewModel.intent = nil
+        viewModel.size = nil
+        viewModel.variant = nil
+        viewModel.removeShapeFeatureToggle = nil
 
         // THEN
-        XCTAssertEqualToExpected(
-            on: stub,
-            otherBorder: .init(),
-            otherColors: .init(),
-            otherSpacings: .init(),
-            otherHeight: true,
-            otherTextFont: .body
-        )
+        XCTAssertEqualToExpected(on: stub)
 
         // UseCase Calls Count
         XCTAssertNotCalled(
@@ -352,6 +420,7 @@ private final class Stub: TagViewModelStub {
     let givenIntent = TagIntent.danger
     let givenSize = TagSize.large
     let givenVariant = TagVariant.tinted
+    let givenRemoveShapeFeatureToggle = false
 
     // MARK: - Expected Properties
 
@@ -359,13 +428,13 @@ private final class Stub: TagViewModelStub {
     let expectedColors = TagColors()
     let expectedSpacings = TagSpacings()
     let expectedHeight: CGFloat = 10
-    let expectedTextFont: Font = .subheadline
+    let expectedTextFontToken = TypographyFontTokenGeneratedMock()
 
     // MARK: - Initialization
 
     init() {
         let getBorderUseCaseMock = TagGetBorderUseCaseableGeneratedMock()
-        getBorderUseCaseMock.executeWithThemeAndSizeAndVariantReturnValue = self.expectedBorder
+        getBorderUseCaseMock.executeWithThemeAndSizeAndRemoveShapeFeatureToggleReturnValue = self.expectedBorder
 
         let getColorsUseCaseMock = TagGetColorsUseCaseableGeneratedMock()
         getColorsUseCaseMock.executeWithThemeAndIntentAndVariantReturnValue = self.expectedColors
@@ -377,7 +446,7 @@ private final class Stub: TagViewModelStub {
         getSpacingsUseCaseMock.executeWithThemeReturnValue = self.expectedSpacings
 
         let getTextFontUseCaseMock = TagGetTextFontUseCaseableGeneratedMock()
-        getTextFontUseCaseMock.executeWithThemeReturnValue = self.expectedTextFont
+        getTextFontUseCaseMock.executeWithThemeReturnValue = self.expectedTextFontToken
 
         let viewModel = TagViewModel(
             getBorderUseCase: getBorderUseCaseMock,
@@ -407,7 +476,8 @@ private extension TagViewModel {
             theme: stub.givenTheme,
             intent: stub.givenIntent,
             size: stub.givenSize,
-            variant: stub.givenVariant
+            variant: stub.givenVariant,
+            removeShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle
         )
     }
 }
@@ -425,7 +495,7 @@ private func XCTAssertNotCalled(
     if getBorderNotCalled {
         TagGetBorderUseCaseableMockTest.XCTCallsCount(
             stub.getBorderUseCaseMock,
-            executeWithThemeAndSizeAndVariantNumberOfCalls: 0
+            executeWithThemeAndSizeAndRemoveShapeFeatureToggleNumberOfCalls: 0
         )
     }
 
@@ -463,8 +533,8 @@ private func XCTAssertEqualToExpected(
     otherBorder: TagBorder? = nil,
     otherColors: TagColors? = nil,
     otherSpacings: TagSpacings? = nil,
-    otherHeight: Bool = false,
-    otherTextFont: Font? = nil
+    otherHeight: CGFloat? = nil,
+    otherTextFontToken: (any TypographyFontToken)? = nil
 ) {
     let viewModel = stub.viewModel
 
@@ -485,12 +555,11 @@ private func XCTAssertEqualToExpected(
     )
     XCTAssertEqual(
         viewModel.height,
-        otherHeight ? nil : stub.expectedHeight,
+        otherHeight ?? stub.expectedHeight,
         "Wrong height value"
     )
-    XCTAssertEqual(
-        viewModel.textFont,
-        otherTextFont ?? stub.expectedTextFont,
+    XCTAssertTrue(
+        viewModel.textFont.equals(otherTextFontToken ?? stub.expectedTextFontToken),
         "Wrong textFont value"
     )
 }

@@ -23,13 +23,16 @@ final class SparkUITagSnapshotTests: UIKitComponentSnapshotTestCase {
     // MARK: - Tests
 
     func test() {
-        let scenarios = TagScenarioSnapshotTests.allCases()
+        let scenarios = TagScenarioSnapshotTests.allCases
 
         for scenario in scenarios {
             let configurations = scenario.configuration(isSwiftUIComponent: false)
             for configuration in configurations {
 
-                let view: SparkUITag = .init(theme: self.theme)
+                let view: SparkUITag = .init(
+                    theme: self.theme,
+                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                )
                 view.intent = configuration.intent
                 view.size = configuration.size
                 view.variant = configuration.variant
@@ -53,9 +56,10 @@ final class SparkUITagSnapshotTests: UIKitComponentSnapshotTestCase {
 
                 self.assertSnapshot(
                     matching: backgroundView,
+                    named: configuration.name,
                     modes: configuration.modes,
                     sizes: configuration.sizes,
-                    testName: configuration.testName()
+                    testName: configuration.testName
                 )
             }
         }
