@@ -159,6 +159,7 @@ public struct SparkTag<Label>: View where Label: View {
 
     let label: () -> Label
     let icon: Image?
+    let removeShapeFeatureToggle: Bool
 
     @StateObject private var viewModel = TagViewModel()
 
@@ -190,10 +191,12 @@ public struct SparkTag<Label>: View where Label: View {
     ///
     /// ![Tag rendering with a localized text.](tag_with_text.png)
     public init(
-        _ textKey: LocalizedStringKey
+        _ textKey: LocalizedStringKey,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.label = { Text(textKey) }
         self.icon = nil
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a text.
@@ -215,10 +218,12 @@ public struct SparkTag<Label>: View where Label: View {
     ///
     /// ![Tag rendering with a text.](tag_with_text.png)
     public init(
-        _ text: String
+        _ text: String,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.label = { Text(text) }
         self.icon = nil
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a custom label.
@@ -246,10 +251,12 @@ public struct SparkTag<Label>: View where Label: View {
     ///
     /// ![Tag rendering with a label.](tag_with_label.png)
     public init(
+        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.label = label
         self.icon = nil
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     // MARK: - Icon Initialization
@@ -278,10 +285,12 @@ public struct SparkTag<Label>: View where Label: View {
     ///
     /// ![Tag rendering with an icon.](tag_with_icon.png)
     public init(
-        icon: Image
+        icon: Image,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == EmptyView {
         self.label = { EmptyView() }
         self.icon = icon
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     // MARK: - Label + Icon Initialization
@@ -311,10 +320,12 @@ public struct SparkTag<Label>: View where Label: View {
     /// ![Tag rendering with a localized text and icon.](tag_with_text_and_icon.png)
     public init(
         _ textKey: LocalizedStringKey,
-        icon: Image
+        icon: Image,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.icon = icon
         self.label = { Text(textKey) }
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a text and an icon.
@@ -341,10 +352,12 @@ public struct SparkTag<Label>: View where Label: View {
     /// ![Tag rendering with a text and icon.](tag_with_text_and_icon.png)
     public init(
         _ text: String,
-        icon: Image
+        icon: Image,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.icon = icon
         self.label = { Text(text) }
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a custom label and an icon.
@@ -375,10 +388,12 @@ public struct SparkTag<Label>: View where Label: View {
     /// ![Tag rendering with a label and icon.](tag_with_label_and_icon.png)
     public init(
         icon: Image,
+        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.icon = icon
         self.label = label
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     // MARK: - Deprecated Initialization
@@ -407,11 +422,13 @@ public struct SparkTag<Label>: View where Label: View {
     @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     public init(
         _ textKey: LocalizedStringKey,
-        theme: any Theme
+        theme: any Theme,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.deprecatedTheme = theme
         self.label = { Text(textKey) }
         self.icon = nil
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a text.
@@ -438,11 +455,13 @@ public struct SparkTag<Label>: View where Label: View {
     @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     public init(
         _ text: String,
-        theme: any Theme
+        theme: any Theme,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.deprecatedTheme = theme
         self.label = { Text(text) }
         self.icon = nil
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a custom label.
@@ -473,11 +492,13 @@ public struct SparkTag<Label>: View where Label: View {
     @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     public init(
         theme: any Theme,
+        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.deprecatedTheme = theme
         self.label = label
         self.icon = nil
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from an icon.
@@ -507,11 +528,13 @@ public struct SparkTag<Label>: View where Label: View {
     @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     public init(
         theme: any Theme,
-        icon: Image
+        icon: Image,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == EmptyView {
         self.deprecatedTheme = theme
         self.label = { EmptyView() }
         self.icon = icon
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a localized string key
@@ -542,11 +565,13 @@ public struct SparkTag<Label>: View where Label: View {
     public init(
         _ textKey: LocalizedStringKey,
         icon: Image,
-        theme: any Theme
+        theme: any Theme,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.deprecatedTheme = theme
         self.icon = icon
         self.label = { Text(textKey) }
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a text and an icon.
@@ -576,11 +601,13 @@ public struct SparkTag<Label>: View where Label: View {
     public init(
         _ text: String,
         icon: Image,
-        theme: any Theme
+        theme: any Theme,
+        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.deprecatedTheme = theme
         self.icon = icon
         self.label = { Text(text) }
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     /// Creates a Spark tag that generates its label from a custom label and an icon.
@@ -614,11 +641,13 @@ public struct SparkTag<Label>: View where Label: View {
     public init(
         theme: any Theme,
         icon: Image,
+        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.deprecatedTheme = theme
         self.icon = icon
         self.label = label
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     // MARK: - View
@@ -675,7 +704,8 @@ public struct SparkTag<Label>: View where Label: View {
                 theme: self.deprecatedTheme ?? self.theme.value,
                 intent: self.intent,
                 size: self.size,
-                variant: self.variant
+                variant: self.variant,
+                removeShapeFeatureToggle: self.removeShapeFeatureToggle
             )
         }
         .onChange(of: self.theme) { theme in
@@ -689,6 +719,9 @@ public struct SparkTag<Label>: View where Label: View {
         }
         .onChange(of: self.variant) { variant in
             self.viewModel.variant = variant
+        }
+        .onChange(of: self.removeShapeFeatureToggle) { removeShapeFeatureToggle in
+            self.viewModel.removeShapeFeatureToggle = removeShapeFeatureToggle
         }
     }
 }

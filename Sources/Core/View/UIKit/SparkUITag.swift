@@ -234,7 +234,10 @@ public final class SparkUITag: UIView {
     /// ```
     ///
     /// ![Tag rendering with a text and icon.](tag_with_text_and_icon.png)
-    public init(theme: any Theme) {
+    public init(
+        theme: any Theme,
+        removeShapeFeatureToggle: Bool = false
+    ) {
         self.theme = theme
 
         self._height = .init(
@@ -249,7 +252,7 @@ public final class SparkUITag: UIView {
         super.init(frame: .zero)
 
         // Setup
-        self.setupView()
+        self.setupView(removeShapeFeatureToggle: removeShapeFeatureToggle)
     }
 
     required init?(coder: NSCoder) {
@@ -258,7 +261,7 @@ public final class SparkUITag: UIView {
 
     // MARK: - View setup
 
-    private func setupView() {
+    private func setupView(removeShapeFeatureToggle: Bool) {
         // Accessibility
         self.isAccessibilityElement = true
         self.scalesLargeContentImage = true
@@ -281,7 +284,8 @@ public final class SparkUITag: UIView {
             theme: self.theme,
             intent: self.intent,
             size: self.size,
-            variant: self.variant
+            variant: self.variant,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 

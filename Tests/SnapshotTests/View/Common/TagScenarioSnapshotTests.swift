@@ -19,6 +19,7 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     case test4
     case test5
     case test6
+    case test7
     case documentation
 
     // MARK: - Type Alias
@@ -47,6 +48,8 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
             return self.test5()
         case .test6:
             return self.test6()
+        case .test7:
+            return self.test7()
         case .documentation:
             return self.documentation()
         }
@@ -244,6 +247,41 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
                 sizes: Constants.Sizes.all
             )
         ]
+    }
+
+    /// Test 7
+    ///
+    /// Description: To test removeShapeFeatureToggle
+    ///
+    /// Content:
+    ///  - intent: main
+    ///  - size: **all**
+    ///  - variant: filled
+    ///  - isHighlighted: false
+    ///  - removeShapeFeatureToggle: **all**
+    ///  - content: icon + text
+    ///  - mode: **all**
+    ///  - size: default
+    private func test7() -> [TagConfigurationSnapshotTests] {
+        let sizes = TagSize.allCases
+        let removeShapeFeatureToggles = Bool.allCases
+
+        return sizes.flatMap { size in
+            removeShapeFeatureToggles.map { removeShapeFeatureToggle in
+                    .init(
+                        scenario: self,
+                        intent: .main,
+                        size: size,
+                        variant: .filled,
+                        isHighlighted: false,
+                        removeShapeFeatureToggle: removeShapeFeatureToggle,
+                        content: .label,
+                        isIcon: true,
+                        modes: Constants.Modes.all,
+                        sizes: Constants.Sizes.default
+                    )
+            }
+        }
     }
 
     // MARK: - Documentation

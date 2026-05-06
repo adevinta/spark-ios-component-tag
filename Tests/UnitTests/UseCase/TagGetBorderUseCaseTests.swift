@@ -19,11 +19,38 @@ final class TagGetBorderUseCaseTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_execute_with_medium_size() {
+    func test_execute_with_medium_size_and_removeShapeFeatureToggle_false() {
         // GIVEN / WHEN
         let border = self.useCase.execute(
             theme: self.theme,
-            size: .medium
+            size: .medium,
+            removeShapeFeatureToggle: false
+        )
+
+        // THEN
+        XCTAssertEqual(border.width, self.theme.border.width.small)
+        XCTAssertEqual(border.radius, self.theme.border.radius.full)
+    }
+
+    func test_execute_with_large_size_and_removeShapeFeatureToggle_false() {
+        // GIVEN / WHEN
+        let border = self.useCase.execute(
+            theme: self.theme,
+            size: .large,
+            removeShapeFeatureToggle: false
+        )
+
+        // THEN
+        XCTAssertEqual(border.width, self.theme.border.width.small)
+        XCTAssertEqual(border.radius, self.theme.border.radius.medium)
+    }
+
+    func test_execute_with_medium_size_and_removeShapeFeatureToggle_true() {
+        // GIVEN / WHEN
+        let border = self.useCase.execute(
+            theme: self.theme,
+            size: .medium,
+            removeShapeFeatureToggle: true
         )
 
         // THEN
@@ -31,11 +58,12 @@ final class TagGetBorderUseCaseTests: XCTestCase {
         XCTAssertEqual(border.radius, self.theme.border.radius.small)
     }
 
-    func test_execute_with_large_size() {
+    func test_execute_with_large_size_and_removeShapeFeatureToggle_true() {
         // GIVEN / WHEN
         let border = self.useCase.execute(
             theme: self.theme,
-            size: .large
+            size: .large,
+            removeShapeFeatureToggle: true
         )
 
         // THEN

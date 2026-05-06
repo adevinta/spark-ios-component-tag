@@ -69,6 +69,7 @@ final class TagViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenSize: stub.givenSize,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -134,6 +135,7 @@ final class TagViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: givenTheme,
             givenSize: stub.givenSize,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -229,6 +231,7 @@ final class TagViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenSize: givenSize,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -278,6 +281,43 @@ final class TagViewModelTests: XCTestCase {
         // **
     }
 
+    func test_removeShapeFeatureToggle_shouldUpdate_border() {
+        // GIVEN
+        let stub = Stub()
+        let viewModel = stub.viewModel
+
+        viewModel.setup(stub: stub)
+        stub.resetMockedData()
+
+        let givenRemoveShapeFeatureToggle = true
+
+        // WHEN
+        viewModel.removeShapeFeatureToggle = givenRemoveShapeFeatureToggle
+
+        // THEN
+        XCTAssertEqualToExpected(on: stub)
+
+        // **
+        // UseCase Calls Count
+        XCTAssertNotCalled(
+            on: stub,
+            getColors: true,
+            getHeight: true,
+            getSpacings: true,
+            getTextFont: true
+        )
+
+        TagGetBorderUseCaseableMockTest.XCTAssert(
+            stub.getBorderUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: stub.givenTheme,
+            givenSize: stub.givenSize,
+            givenRemoveShapeFeatureToggle: givenRemoveShapeFeatureToggle,
+            expectedReturnValue: stub.expectedBorder
+        )
+        // **
+    }
+
     func test_propertiesChanged_beforeSetup_shouldNotCallUseCases() {
         // GIVEN
         let stub = Stub()
@@ -288,6 +328,7 @@ final class TagViewModelTests: XCTestCase {
         viewModel.intent = stub.givenIntent
         viewModel.size = stub.givenSize
         viewModel.variant = stub.givenVariant
+        viewModel.removeShapeFeatureToggle = stub.givenRemoveShapeFeatureToggle
 
         // THEN
         XCTAssertEqualToExpected(
@@ -323,6 +364,7 @@ final class TagViewModelTests: XCTestCase {
         viewModel.intent = stub.givenIntent
         viewModel.size = stub.givenSize
         viewModel.variant = stub.givenVariant
+        viewModel.removeShapeFeatureToggle = stub.givenRemoveShapeFeatureToggle
 
         // THEN
         XCTAssertEqualToExpected(on: stub)
@@ -351,6 +393,7 @@ final class TagViewModelTests: XCTestCase {
         viewModel.intent = nil
         viewModel.size = nil
         viewModel.variant = nil
+        viewModel.removeShapeFeatureToggle = nil
 
         // THEN
         XCTAssertEqualToExpected(on: stub)
@@ -377,6 +420,7 @@ private final class Stub: TagViewModelStub {
     let givenIntent = TagIntent.danger
     let givenSize = TagSize.large
     let givenVariant = TagVariant.tinted
+    let givenRemoveShapeFeatureToggle = false
 
     // MARK: - Expected Properties
 
@@ -390,7 +434,7 @@ private final class Stub: TagViewModelStub {
 
     init() {
         let getBorderUseCaseMock = TagGetBorderUseCaseableGeneratedMock()
-        getBorderUseCaseMock.executeWithThemeAndSizeReturnValue = self.expectedBorder
+        getBorderUseCaseMock.executeWithThemeAndSizeAndRemoveShapeFeatureToggleReturnValue = self.expectedBorder
 
         let getColorsUseCaseMock = TagGetColorsUseCaseableGeneratedMock()
         getColorsUseCaseMock.executeWithThemeAndIntentAndVariantReturnValue = self.expectedColors
@@ -432,7 +476,8 @@ private extension TagViewModel {
             theme: stub.givenTheme,
             intent: stub.givenIntent,
             size: stub.givenSize,
-            variant: stub.givenVariant
+            variant: stub.givenVariant,
+            removeShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle
         )
     }
 }
@@ -450,7 +495,7 @@ private func XCTAssertNotCalled(
     if getBorderNotCalled {
         TagGetBorderUseCaseableMockTest.XCTCallsCount(
             stub.getBorderUseCaseMock,
-            executeWithThemeAndSizeNumberOfCalls: 0
+            executeWithThemeAndSizeAndRemoveShapeFeatureToggleNumberOfCalls: 0
         )
     }
 

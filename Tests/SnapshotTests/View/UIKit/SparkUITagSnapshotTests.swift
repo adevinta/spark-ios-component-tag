@@ -29,7 +29,10 @@ final class SparkUITagSnapshotTests: UIKitComponentSnapshotTestCase {
             let configurations = scenario.configuration(isSwiftUIComponent: false)
             for configuration in configurations {
 
-                let view: SparkUITag = .init(theme: self.theme)
+                let view: SparkUITag = .init(
+                    theme: self.theme,
+                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                )
                 view.intent = configuration.intent
                 view.size = configuration.size
                 view.variant = configuration.variant
