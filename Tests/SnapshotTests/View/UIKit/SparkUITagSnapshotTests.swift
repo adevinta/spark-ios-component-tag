@@ -11,6 +11,7 @@ import SnapshotTesting
 @testable import SparkComponentTag
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
+@_spi(SI_SPI) import SparkCommonTesting
 import SparkTheming
 import SparkTheme
 
@@ -29,9 +30,12 @@ final class SparkUITagSnapshotTests: UIKitComponentSnapshotTestCase {
             let configurations = scenario.configuration(isSwiftUIComponent: false)
             for configuration in configurations {
 
+                let service = SparkFeatureToggleServicingGeneratedMock()
+                service.rebranding = configuration.rebrandingFeatureToggle
+                SparkFeatureToggleService.shared = service
+
                 let view: SparkUITag = .init(
-                    theme: self.theme,
-                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                    theme: self.theme
                 )
                 view.intent = configuration.intent
                 view.size = configuration.size

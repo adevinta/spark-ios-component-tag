@@ -14,6 +14,7 @@ import SparkTheming
 import SparkTheme
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
+@_spi(SI_SPI) import SparkCommonTesting
 
 final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
@@ -29,6 +30,11 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
         for scenario in scenarios {
             let configurations = scenario.configuration(isSwiftUIComponent: true)
             for configuration in configurations {
+
+                let service = SparkFeatureToggleServicingGeneratedMock()
+                service.rebranding = configuration.rebrandingFeatureToggle
+                SparkFeatureToggleService.shared = service
+
                 let view = self.component(configuration: configuration)
                     .sparkTheme(self.theme)
                     .sparkTagIntent(configuration.intent)
@@ -57,7 +63,6 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
         if configuration.isIcon, configuration.content == .other {
             SparkTag(
                 icon: .mock,
-                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                 label: {
                     Group {
                         Text("My Tag ") +
@@ -70,7 +75,6 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
         } else if !configuration.isIcon, configuration.content == .other {
             SparkTag(
-                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                 label: {
                     Group {
                         Text("My Tag ") +
@@ -84,20 +88,17 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
         } else if configuration.isIcon, let text = configuration.content.text {
             SparkTag(
                 text,
-                icon: .mock,
-                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                icon: .mock
             )
 
         } else if configuration.isIcon {
             SparkTag(
-                icon: .mock,
-                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                icon: .mock
             )
 
         } else {
             SparkTag(
-                configuration.content.text ?? "Unknow",
-                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                configuration.content.text ?? "Unknow"
             )
         }
     }

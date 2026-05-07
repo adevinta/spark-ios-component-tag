@@ -9,22 +9,36 @@
 import XCTest
 @testable import SparkComponentTag
 @_spi(SI_SPI) import SparkThemingTesting
+@_spi(SI_SPI) import SparkCommon
+@_spi(SI_SPI) import SparkCommonTesting
 
 final class TagGetBorderUseCaseTests: XCTestCase {
 
     // MARK: - Properties
 
-    private var useCase = TagGetBorderUseCase()
     private var theme = ThemeGeneratedMock.mocked()
+
+    override func tearDown() {
+        super.tearDown()
+
+    }
 
     // MARK: - Tests
 
-    func test_execute_with_medium_size_and_removeShapeFeatureToggle_false() {
-        // GIVEN / WHEN
-        let border = self.useCase.execute(
+    func test_execute_with_medium_size_and_rebranding_false() {
+        // GIVEN
+        let service = SparkFeatureToggleServicingGeneratedMock()
+        service.rebranding = false
+        SparkFeatureToggleService.shared = service
+
+        let useCase = TagGetBorderUseCase(
+            featureTogglesService: service
+        )
+
+        // WHEN
+        let border = useCase.execute(
             theme: self.theme,
-            size: .medium,
-            removeShapeFeatureToggle: false
+            size: .medium
         )
 
         // THEN
@@ -32,12 +46,20 @@ final class TagGetBorderUseCaseTests: XCTestCase {
         XCTAssertEqual(border.radius, self.theme.border.radius.full)
     }
 
-    func test_execute_with_large_size_and_removeShapeFeatureToggle_false() {
-        // GIVEN / WHEN
-        let border = self.useCase.execute(
+    func test_execute_with_large_size_and_rebranding_false() {
+        // GIVEN
+        let service = SparkFeatureToggleServicingGeneratedMock()
+        service.rebranding = false
+        SparkFeatureToggleService.shared = service
+
+        let useCase = TagGetBorderUseCase(
+            featureTogglesService: service
+        )
+
+        // WHEN
+        let border = useCase.execute(
             theme: self.theme,
-            size: .large,
-            removeShapeFeatureToggle: false
+            size: .large
         )
 
         // THEN
@@ -45,12 +67,20 @@ final class TagGetBorderUseCaseTests: XCTestCase {
         XCTAssertEqual(border.radius, self.theme.border.radius.medium)
     }
 
-    func test_execute_with_medium_size_and_removeShapeFeatureToggle_true() {
-        // GIVEN / WHEN
-        let border = self.useCase.execute(
+    func test_execute_with_medium_size_and_rebranding_true() {
+        // GIVEN
+        let service = SparkFeatureToggleServicingGeneratedMock()
+        service.rebranding = true
+        SparkFeatureToggleService.shared = service
+
+        let useCase = TagGetBorderUseCase(
+            featureTogglesService: service
+        )
+
+        // WHEN
+        let border = useCase.execute(
             theme: self.theme,
-            size: .medium,
-            removeShapeFeatureToggle: true
+            size: .medium
         )
 
         // THEN
@@ -58,12 +88,20 @@ final class TagGetBorderUseCaseTests: XCTestCase {
         XCTAssertEqual(border.radius, self.theme.border.radius.small)
     }
 
-    func test_execute_with_large_size_and_removeShapeFeatureToggle_true() {
-        // GIVEN / WHEN
-        let border = self.useCase.execute(
+    func test_execute_with_large_size_and_rebranding_true() {
+        // GIVEN
+        let service = SparkFeatureToggleServicingGeneratedMock()
+        service.rebranding = true
+        SparkFeatureToggleService.shared = service
+
+        let useCase = TagGetBorderUseCase(
+            featureTogglesService: service
+        )
+
+        // WHEN
+        let border = useCase.execute(
             theme: self.theme,
-            size: .large,
-            removeShapeFeatureToggle: true
+            size: .large
         )
 
         // THEN
