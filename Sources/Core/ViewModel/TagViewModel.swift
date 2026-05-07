@@ -61,14 +61,6 @@ final internal class TagViewModel: ObservableObject {
         }
     }
 
-    var removeShapeFeatureToggle: Bool? {
-        didSet {
-            guard oldValue != self.removeShapeFeatureToggle, self.alreadyUpdateAll else { return }
-
-            self.setBorder()
-        }
-    }
-
     // MARK: - Private Properties
 
     private var alreadyUpdateAll = false
@@ -103,14 +95,12 @@ final internal class TagViewModel: ObservableObject {
         theme: any Theme,
         intent: TagIntent,
         size: TagSize,
-        variant: TagVariant,
-        removeShapeFeatureToggle: Bool
+        variant: TagVariant
     ) {
         self.theme = theme
         self.intent = intent
         self.size = size
         self.variant = variant
-        self.removeShapeFeatureToggle = removeShapeFeatureToggle
 
         self.setBorder()
         self.setColors()
@@ -124,14 +114,13 @@ final internal class TagViewModel: ObservableObject {
     // MARK: - Private Setter
 
     private func setBorder() {
-        guard let theme, let size, let removeShapeFeatureToggle else {
+        guard let theme, let size else {
             return
         }
 
         self.border = self.getBorderUseCase.execute(
             theme: theme,
-            size: size,
-            removeShapeFeatureToggle: removeShapeFeatureToggle
+            size: size
         )
     }
 

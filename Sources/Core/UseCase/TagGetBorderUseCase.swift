@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SparkCommon
 import SparkTheming
 import SwiftUI
 
@@ -15,24 +16,32 @@ protocol TagGetBorderUseCaseable {
     // sourcery: theme = "Identical"
     func execute(
         theme: any Theme,
-        size: TagSize,
-        removeShapeFeatureToggle: Bool
+        size: TagSize
     ) -> TagBorder
 }
 
 final class TagGetBorderUseCase: TagGetBorderUseCaseable {
 
+    // MARK: - Properties
+
+    private let featureTogglesService: any SparkFeatureToggleServicing
+
+    // MARK: - Initialization
+
+    init(featureTogglesService: any SparkFeatureToggleServicing = SparkFeatureToggleService.shared) {
+        self.featureTogglesService = featureTogglesService
+    }
+
     // MARK: - Methods
 
     func execute(
         theme: any Theme,
-        size: TagSize,
-        removeShapeFeatureToggle: Bool
+        size: TagSize
     ) -> TagBorder {
         let border = theme.border
 
         let width = border.width.small
-        let radius: CGFloat = removeShapeFeatureToggle ? border.radius.small : {
+        let radius: CGFloat = self.featureTogglesService.rebranding ? border.radius.small : {
             return switch size {
             case .medium: border.radius.full
             case .large: border.radius.medium

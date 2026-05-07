@@ -61,14 +61,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test all intents
     ///
-    /// Content:
-    ///  - intents: **all**
-    ///  - size: medium
-    ///  - variant: tinted
-    ///  - isHighlighted: false
-    ///  - content: icon + text
-    ///  - mode: **all**
-    ///  - size: default
     private func test1() -> [TagConfigurationSnapshotTests] {
         let intents = TagIntent.allCases
 
@@ -76,13 +68,7 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
             .init(
                 scenario: self,
                 intent: $0,
-                size: .medium,
-                variant: .tinted,
-                isHighlighted: false,
-                content: .label,
-                isIcon: true,
-                modes: Constants.Modes.all,
-                sizes: Constants.Sizes.default
+                modes: Constants.Modes.all
             )
         }
     }
@@ -91,14 +77,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test all size & isHighlighted
     ///
-    /// Content:
-    ///  - intent: main
-    ///  - size: **all**
-    ///  - variant: filled
-    ///  - isHighlighted: **all**
-    ///  - content: text only
-    ///  - mode: **all**
-    ///  - size: default
     private func test2() -> [TagConfigurationSnapshotTests] {
         let sizes = TagSize.allCases
         let isHighlighteds = Bool.allCases
@@ -107,14 +85,10 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
             isHighlighteds.map { isHighlighted in
                     .init(
                         scenario: self,
-                        intent: .main,
                         size: size,
-                        variant: .filled,
                         isHighlighted: isHighlighted,
-                        content: .label,
                         isIcon: false,
-                        modes: Constants.Modes.all,
-                        sizes: Constants.Sizes.default
+                        modes: Constants.Modes.all
                     )
             }
         }
@@ -124,14 +98,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test all variants & isHighlighted
     ///
-    /// Content:
-    ///  - intent: main
-    ///  - size: medium
-    ///  - variant: **all**
-    ///  - isHighlighted: **all**
-    ///  - content: text only
-    ///  - mode: **all**
-    ///  - size: default
     private func test3() -> [TagConfigurationSnapshotTests] {
         let variants = TagVariant.allCases
         let isHighlighteds = Bool.allCases
@@ -140,14 +106,11 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
             isHighlighteds.map { isHighlighted in
                     .init(
                         scenario: self,
-                        intent: .main,
-                        size: .medium,
+                        size: .large,
                         variant: variant,
                         isHighlighted: isHighlighted,
                         content: .label,
-                        isIcon: false,
-                        modes: Constants.Modes.all,
-                        sizes: Constants.Sizes.default
+                        modes: Constants.Modes.all
                     )
             }
         }
@@ -157,14 +120,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test all color for filled variant
     ///
-    /// Content:
-    ///  - intents: **all**
-    ///  - size: medium
-    ///  - variant: filled
-    ///  - isHighlighted: false
-    ///  - content: icon + text
-    ///  - mode: default
-    ///  - size: default
     private func test4() -> [TagConfigurationSnapshotTests] {
         let intents = TagIntent.allCases
 
@@ -172,13 +127,7 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
             .init(
                 scenario: self,
                 intent: $0,
-                size: .medium,
-                variant: .filled,
-                isHighlighted: false,
-                content: .label,
-                isIcon: true,
-                modes: Constants.Modes.default,
-                sizes: Constants.Sizes.default
+                variant: .filled
             )
         }
     }
@@ -187,14 +136,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test content resilience
     ///
-    /// Content:
-    ///  - intent: support
-    ///  - size: medium
-    ///  - variant: tinted
-    ///  - isHighlighted: false
-    ///  - content: **all**
-    ///  - mode: default
-    ///  - size: default
     private func test5() -> [TagConfigurationSnapshotTests] {
         let contents = TagContentResilience.allCases
         let isIcons = Bool.allCases
@@ -207,14 +148,8 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
 
                 return .init(
                     scenario: self,
-                    intent: .support,
-                    size: .medium,
-                    variant: .tinted,
-                    isHighlighted: false,
                     content: content,
-                    isIcon: isIcon,
-                    modes: Constants.Modes.default,
-                    sizes: Constants.Sizes.default
+                    isIcon: isIcon
                 )
             }
             .compactMap { $0 }
@@ -225,25 +160,10 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test a11y sizes
     ///
-    /// Content:
-    ///  - intent: main
-    ///  - size: medium
-    ///  - variant: tinted
-    ///  - isHighlighted: false
-    ///  - content: icon + text
-    ///  - mode: default
-    ///  - size:  all
     private func test6() -> [TagConfigurationSnapshotTests] {
         return [
             .init(
                 scenario: self,
-                intent: .main,
-                size: .medium,
-                variant: .tinted,
-                isHighlighted: false,
-                content: .label,
-                isIcon: true,
-                modes: Constants.Modes.default,
                 sizes: Constants.Sizes.all
             )
         ]
@@ -251,36 +171,16 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
 
     /// Test 7
     ///
-    /// Description: To test removeShapeFeatureToggle
+    /// Description: To test rebrandingFeatureToggle
     ///
-    /// Content:
-    ///  - intent: main
-    ///  - size: **all**
-    ///  - variant: filled
-    ///  - isHighlighted: false
-    ///  - removeShapeFeatureToggle: **all**
-    ///  - content: icon + text
-    ///  - mode: **all**
-    ///  - size: default
     private func test7() -> [TagConfigurationSnapshotTests] {
-        let sizes = TagSize.allCases
-        let removeShapeFeatureToggles = Bool.allCases
+        let rebrandingFeatureToggles = Bool.allCases
 
-        return sizes.flatMap { size in
-            removeShapeFeatureToggles.map { removeShapeFeatureToggle in
-                    .init(
-                        scenario: self,
-                        intent: .main,
-                        size: size,
-                        variant: .filled,
-                        isHighlighted: false,
-                        removeShapeFeatureToggle: removeShapeFeatureToggle,
-                        content: .label,
-                        isIcon: true,
-                        modes: Constants.Modes.all,
-                        sizes: Constants.Sizes.default
-                    )
-            }
+        return rebrandingFeatureToggles.map { rebrandingFeatureToggle in
+                .init(
+                    scenario: self,
+                    rebrandingFeatureToggle: rebrandingFeatureToggle
+                )
         }
     }
 

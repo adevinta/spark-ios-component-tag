@@ -31,12 +31,10 @@ public extension SparkTag {
     ///
     /// ![Tag rendering with a localized text.](tag_with_text.png)
     init(
-        _ textKey: LocalizedStringKey,
-        removeShapeFeatureToggle: Bool = false
+        _ textKey: LocalizedStringKey
     ) where Label == Text {
         self.init(
             optionalIcon: nil,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(textKey) }
         )
     }
@@ -60,12 +58,10 @@ public extension SparkTag {
     ///
     /// ![Tag rendering with a text.](tag_with_text.png)
     init(
-        _ text: String,
-        removeShapeFeatureToggle: Bool = false
+        _ text: String
     ) where Label == Text {
         self.init(
             optionalIcon: nil,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(text) }
         )
     }
@@ -95,12 +91,10 @@ public extension SparkTag {
     ///
     /// ![Tag rendering with a label.](tag_with_label.png)
     init(
-        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.init(
             optionalIcon: nil,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: label
         )
     }
@@ -131,12 +125,10 @@ public extension SparkTag {
     ///
     /// ![Tag rendering with an icon.](tag_with_icon.png)
     init(
-        icon: Image,
-        removeShapeFeatureToggle: Bool = false
+        icon: Image
     ) where Label == EmptyView {
         self.init(
             optionalIcon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { EmptyView() }
         )
     }
@@ -168,12 +160,10 @@ public extension SparkTag {
     /// ![Tag rendering with a localized text and icon.](tag_with_text_and_icon.png)
     init(
         _ textKey: LocalizedStringKey,
-        icon: Image,
-        removeShapeFeatureToggle: Bool = false
+        icon: Image
     ) where Label == Text {
         self.init(
             optionalIcon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(textKey) }
         )
     }
@@ -202,12 +192,10 @@ public extension SparkTag {
     /// ![Tag rendering with a text and icon.](tag_with_text_and_icon.png)
     init(
         _ text: String,
-        icon: Image,
-        removeShapeFeatureToggle: Bool = false
+        icon: Image
     ) where Label == Text {
         self.init(
             optionalIcon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(text) }
         )
     }
@@ -240,12 +228,10 @@ public extension SparkTag {
     /// ![Tag rendering with a label and icon.](tag_with_label_and_icon.png)
     init(
         icon: Image,
-        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.init(
             optionalIcon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: label
         )
     }

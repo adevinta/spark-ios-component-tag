@@ -159,7 +159,6 @@ public struct SparkTag<Label>: View where Label: View {
 
     let label: () -> Label
     let icon: Image?
-    let removeShapeFeatureToggle: Bool
 
     @StateObject private var viewModel = TagViewModel()
 
@@ -174,12 +173,10 @@ public struct SparkTag<Label>: View where Label: View {
 
     init(
         optionalIcon icon: Image?,
-        removeShapeFeatureToggle: Bool,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.icon = icon
         self.label = label
-        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     // MARK: - Deprecated Initialization
@@ -188,13 +185,11 @@ public struct SparkTag<Label>: View where Label: View {
     init(
         deprecatedTheme: any Theme,
         icon: Image?,
-        removeShapeFeatureToggle: Bool,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.deprecatedTheme = deprecatedTheme
         self.icon = icon
         self.label = label
-        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     // MARK: - View
@@ -251,8 +246,7 @@ public struct SparkTag<Label>: View where Label: View {
                 theme: self.deprecatedTheme ?? self.theme.value,
                 intent: self.intent,
                 size: self.size,
-                variant: self.variant,
-                removeShapeFeatureToggle: self.removeShapeFeatureToggle
+                variant: self.variant
             )
         }
         .onChange(of: self.theme) { theme in
@@ -266,9 +260,6 @@ public struct SparkTag<Label>: View where Label: View {
         }
         .onChange(of: self.variant) { variant in
             self.viewModel.variant = variant
-        }
-        .onChange(of: self.removeShapeFeatureToggle) { removeShapeFeatureToggle in
-            self.viewModel.removeShapeFeatureToggle = removeShapeFeatureToggle
         }
     }
 }

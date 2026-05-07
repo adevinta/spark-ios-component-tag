@@ -36,12 +36,10 @@ public extension SparkTag {
     init(
         _ textKey: LocalizedStringKey,
         theme: any Theme,
-        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.init(
             deprecatedTheme: theme,
             icon: nil,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(textKey) }
         )
     }
@@ -71,12 +69,10 @@ public extension SparkTag {
     init(
         _ text: String,
         theme: any Theme,
-        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.init(
             deprecatedTheme: theme,
             icon: nil,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(text) }
         )
     }
@@ -109,13 +105,11 @@ public extension SparkTag {
     @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     init(
         theme: any Theme,
-        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.init(
             deprecatedTheme: theme,
             icon: nil,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: label
         )
     }
@@ -148,12 +142,10 @@ public extension SparkTag {
     init(
         theme: any Theme,
         icon: Image,
-        removeShapeFeatureToggle: Bool = false
     ) where Label == EmptyView {
         self.init(
             deprecatedTheme: theme,
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { EmptyView() }
         )
     }
@@ -187,12 +179,10 @@ public extension SparkTag {
         _ textKey: LocalizedStringKey,
         icon: Image,
         theme: any Theme,
-        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.init(
             deprecatedTheme: theme,
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(textKey) }
         )
     }
@@ -225,12 +215,10 @@ public extension SparkTag {
         _ text: String,
         icon: Image,
         theme: any Theme,
-        removeShapeFeatureToggle: Bool = false
     ) where Label == Text {
         self.init(
             deprecatedTheme: theme,
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: { Text(text) }
         )
     }
@@ -266,13 +254,11 @@ public extension SparkTag {
     init(
         theme: any Theme,
         icon: Image,
-        removeShapeFeatureToggle: Bool = false,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.init(
             deprecatedTheme: theme,
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             label: label
         )
     }
