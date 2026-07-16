@@ -19,7 +19,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
     case test4
     case test5
     case test6
-    case test7
     case documentation
 
     // MARK: - Type Alias
@@ -48,8 +47,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
             return self.test5()
         case .test6:
             return self.test6()
-        case .test7:
-            return self.test7()
         case .documentation:
             return self.documentation()
         }
@@ -167,21 +164,6 @@ enum TagScenarioSnapshotTests: String, CaseIterable {
                 sizes: Constants.Sizes.all
             )
         ]
-    }
-
-    /// Test 7
-    ///
-    /// Description: To test rebrandingFeatureToggle
-    ///
-    private func test7() -> [TagConfigurationSnapshotTests] {
-        let rebrandingFeatureToggles = Bool.allCases
-
-        return rebrandingFeatureToggles.map { rebrandingFeatureToggle in
-                .init(
-                    scenario: self,
-                    rebrandingFeatureToggle: rebrandingFeatureToggle
-                )
-        }
     }
 
     // MARK: - Documentation

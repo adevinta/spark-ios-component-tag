@@ -31,10 +31,6 @@ final class SparkTagSnapshotTests: SwiftUIComponentSnapshotTestCase {
             let configurations = scenario.configuration(isSwiftUIComponent: true)
             for configuration in configurations {
 
-                let service = SparkFeatureToggleServicingGeneratedMock()
-                service.rebranding = configuration.rebrandingFeatureToggle
-                SparkFeatureToggleService.shared = service
-
                 let view = self.component(configuration: configuration)
                     .sparkTheme(self.theme)
                     .sparkTagIntent(configuration.intent)
