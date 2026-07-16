@@ -25,57 +25,9 @@ final class TagGetBorderUseCaseTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_execute_with_medium_size_and_rebranding_false() {
+    func test_execute_with_medium_size() {
         // GIVEN
-        let service = SparkFeatureToggleServicingGeneratedMock()
-        service.rebranding = false
-        SparkFeatureToggleService.shared = service
-
-        let useCase = TagGetBorderUseCase(
-            featureTogglesService: service
-        )
-
-        // WHEN
-        let border = useCase.execute(
-            theme: self.theme,
-            size: .medium
-        )
-
-        // THEN
-        XCTAssertEqual(border.width, self.theme.border.width.small)
-        XCTAssertEqual(border.radius, self.theme.border.radius.full)
-    }
-
-    func test_execute_with_large_size_and_rebranding_false() {
-        // GIVEN
-        let service = SparkFeatureToggleServicingGeneratedMock()
-        service.rebranding = false
-        SparkFeatureToggleService.shared = service
-
-        let useCase = TagGetBorderUseCase(
-            featureTogglesService: service
-        )
-
-        // WHEN
-        let border = useCase.execute(
-            theme: self.theme,
-            size: .large
-        )
-
-        // THEN
-        XCTAssertEqual(border.width, self.theme.border.width.small)
-        XCTAssertEqual(border.radius, self.theme.border.radius.medium)
-    }
-
-    func test_execute_with_medium_size_and_rebranding_true() {
-        // GIVEN
-        let service = SparkFeatureToggleServicingGeneratedMock()
-        service.rebranding = true
-        SparkFeatureToggleService.shared = service
-
-        let useCase = TagGetBorderUseCase(
-            featureTogglesService: service
-        )
+        let useCase = TagGetBorderUseCase()
 
         // WHEN
         let border = useCase.execute(
@@ -88,15 +40,9 @@ final class TagGetBorderUseCaseTests: XCTestCase {
         XCTAssertEqual(border.radius, self.theme.border.radius.small)
     }
 
-    func test_execute_with_large_size_and_rebranding_true() {
+    func test_execute_with_large_size() {
         // GIVEN
-        let service = SparkFeatureToggleServicingGeneratedMock()
-        service.rebranding = true
-        SparkFeatureToggleService.shared = service
-
-        let useCase = TagGetBorderUseCase(
-            featureTogglesService: service
-        )
+        let useCase = TagGetBorderUseCase()
 
         // WHEN
         let border = useCase.execute(

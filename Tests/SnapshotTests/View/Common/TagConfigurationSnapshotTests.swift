@@ -22,7 +22,6 @@ struct TagConfigurationSnapshotTests {
     var size: TagSize = .default
     var variant: TagVariant = .default
     var isHighlighted: Bool = false
-    var rebrandingFeatureToggle: Bool = false
     var content: TagContentResilience = .default
     var isIcon: Bool = true
     var width: CGFloat? {
@@ -44,7 +43,6 @@ struct TagConfigurationSnapshotTests {
             "\(self.size)",
             "\(self.variant)",
             self.isHighlighted ? "isHighlighted" : nil,
-            self.rebrandingFeatureToggle ? "rebrandingFeatureToggle" : nil,
             "\(self.content.rawValue)",
             self.isIcon ? "isIcon" : nil,
         ]

@@ -22,16 +22,6 @@ protocol TagGetBorderUseCaseable {
 
 final class TagGetBorderUseCase: TagGetBorderUseCaseable {
 
-    // MARK: - Properties
-
-    private let featureTogglesService: any SparkFeatureToggleServicing
-
-    // MARK: - Initialization
-
-    init(featureTogglesService: any SparkFeatureToggleServicing = SparkFeatureToggleService.shared) {
-        self.featureTogglesService = featureTogglesService
-    }
-
     // MARK: - Methods
 
     func execute(
@@ -40,14 +30,9 @@ final class TagGetBorderUseCase: TagGetBorderUseCaseable {
     ) -> TagBorder {
         let border = theme.border
 
-        let width = border.width.small
-        let radius: CGFloat = self.featureTogglesService.rebranding ? border.radius.small : {
-            return switch size {
-            case .medium: border.radius.full
-            case .large: border.radius.medium
-            }
-        }()
-
-        return .init(width: width, radius: radius)
+        return .init(
+            width: border.width.small,
+            radius: border.radius.small
+        )
     }
 }
