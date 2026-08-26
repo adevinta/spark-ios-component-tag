@@ -6,16 +6,17 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import XCTest
+import Testing
 import SwiftUI
 @testable import SparkComponentTag
 @_spi(SI_SPI) import SparkTheming
 @_spi(SI_SPI) import SparkThemingTesting
 
-final class TagGetTextFontUseCaseTests: XCTestCase {
+struct TagGetTextFontUseCaseTests {
 
     // MARK: - Tests
 
+    @Test
     func test_execute_returnsTypographyFontTokenFromTheme() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
@@ -25,6 +26,6 @@ final class TagGetTextFontUseCaseTests: XCTestCase {
         let result = useCase.execute(theme: theme)
 
         // THEN
-        XCTAssertTrue(result.equals(theme.typography.captionHighlight))
+        #expect(result.equals(theme.typography.captionHighlight))
     }
 }

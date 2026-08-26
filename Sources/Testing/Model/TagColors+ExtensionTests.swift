@@ -17,12 +17,14 @@ extension TagColors {
     static func mocked(
         backgroundColor: any ColorToken = ColorTokenGeneratedMock.random(),
         borderColor: any ColorToken = ColorTokenGeneratedMock.random(),
-        foregroundColor: any ColorToken = ColorTokenGeneratedMock.random()
+        iconColor: any ColorToken = ColorTokenGeneratedMock.random(),
+        textColor: any ColorToken = ColorTokenGeneratedMock.random()
     ) -> Self {
         return .init(
             backgroundColor: backgroundColor,
             borderColor: borderColor,
-            foregroundColor: foregroundColor
+            iconColor: iconColor,
+            textColor: textColor
         )
     }
 }

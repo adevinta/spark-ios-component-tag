@@ -11,6 +11,7 @@
 /// The default value is **.main**.
 public enum TagIntent: CaseIterable {
     case accent
+    case ai
     case alert
     case danger
     case info

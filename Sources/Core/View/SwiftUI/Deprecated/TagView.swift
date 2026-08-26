@@ -58,7 +58,7 @@ public struct TagView: View {
             self.viewModel.iconImage?
                 .resizable()
                 .scaledToFit()
-                .foregroundColor(self.viewModel.colors.foregroundColor.color)
+                .foregroundColor(self.viewModel.colors.iconColor.color)
                 .accessibilityIdentifier(AccessibilityIdentifier.iconImage)
 
             // Optional Text
@@ -83,7 +83,7 @@ public struct TagView: View {
         if let text = self.viewModel.text {
             Text(text)
                 .font(self.viewModel.typography.captionHighlight.font)
-                .foregroundColor(self.viewModel.colors.foregroundColor.color)
+                .foregroundColor(self.viewModel.colors.textColor.color)
         } else if let attributedText = self.viewModel.attributedText { // Optional AttributedText
             Text(attributedText)
         }

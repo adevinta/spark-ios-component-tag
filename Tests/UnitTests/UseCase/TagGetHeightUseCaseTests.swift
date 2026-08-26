@@ -6,14 +6,15 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import SparkComponentTag
 @_spi(SI_SPI) import SparkThemingTesting
 
-final class TagGetHeightUseCaseTests: XCTestCase {
+struct TagGetHeightUseCaseTests {
 
     // MARK: - Tests
 
+    @Test
     func test_execute_with_medium_size() {
         // GIVEN
         let useCase = TagGetHeightUseCase()
@@ -22,9 +23,10 @@ final class TagGetHeightUseCaseTests: XCTestCase {
         let height = useCase.execute(size: .medium)
 
         // THEN
-        XCTAssertEqual(height, 20)
+        #expect(height == 20)
     }
 
+    @Test
     func test_execute_with_large_size() {
         // GIVEN
         let useCase = TagGetHeightUseCase()
@@ -33,6 +35,6 @@ final class TagGetHeightUseCaseTests: XCTestCase {
         let height = useCase.execute(size: .large)
 
         // THEN
-        XCTAssertEqual(height, 24)
+        #expect(height == 24)
     }
 }

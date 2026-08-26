@@ -403,8 +403,8 @@ public final class SparkUITag: UIView {
             guard let self else { return }
 
             self.backgroundColor = colors.backgroundColor.uiColor
-            self.textLabel.textColor = colors.foregroundColor.uiColor
-            self.iconImageView.tintColor = colors.foregroundColor.uiColor
+            self.textLabel.textColor = colors.textColor.uiColor
+            self.iconImageView.tintColor = colors.iconColor.uiColor
 
             self.updateBorder()
         }
