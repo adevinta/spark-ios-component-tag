@@ -6,19 +6,20 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import SparkComponentTag
 
-final class TagBorderTests: XCTestCase {
+struct TagBorderTests {
 
     // MARK: - Tests
 
+    @Test
     func test_default_values() {
         // GIVEN / WHEN
         let border = TagBorder()
 
         // THEN
-        XCTAssertEqual(border.width, 0)
-        XCTAssertEqual(border.radius, 0)
+        #expect(border.width == 0)
+        #expect(border.radius == 0)
     }
 }

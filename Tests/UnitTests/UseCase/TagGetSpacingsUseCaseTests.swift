@@ -6,14 +6,15 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import SparkComponentTag
 @_spi(SI_SPI) import SparkThemingTesting
 
-final class TagGetSpacingsUseCaseTests: XCTestCase {
+struct TagGetSpacingsUseCaseTests {
 
     // MARK: - Tests
 
+    @Test
     func test_execute() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
@@ -23,7 +24,7 @@ final class TagGetSpacingsUseCaseTests: XCTestCase {
         let spacings = useCase.execute(theme: theme)
 
         // THEN
-        XCTAssertEqual(spacings.horizontalPadding, theme.layout.spacing.medium)
-        XCTAssertEqual(spacings.horizontalSpacing, theme.layout.spacing.small)
+        #expect(spacings.horizontalPadding == theme.layout.spacing.medium)
+        #expect(spacings.horizontalSpacing == theme.layout.spacing.small)
     }
 }

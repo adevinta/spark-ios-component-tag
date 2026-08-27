@@ -6,14 +6,15 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import SparkComponentTag
 
-final class TagConstantsTests: XCTestCase {
+struct TagConstantsTests {
 
     // MARK: - Tests
 
+    @Test
     func test_iconSizeConstant() {
-        XCTAssertEqual(TagConstants.iconSize, 12)
+        #expect(TagConstants.iconSize == 12)
     }
 }

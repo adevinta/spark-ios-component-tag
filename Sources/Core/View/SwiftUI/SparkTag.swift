@@ -204,14 +204,14 @@ public struct SparkTag<Label>: View where Label: View {
                     height: TagConstants.iconSize,
                     relativeTo: .body
                 )
-                .foregroundStyle(self.viewModel.colors.foregroundColor)
+                .foregroundStyle(self.viewModel.colors.iconColor)
                 .accessibilityIdentifier(AccessibilityIdentifier.iconImage)
                 .accessibilityHidden(true)
 
             // Optional Text
             self.label()
                 .font(self.viewModel.textFont)
-                .foregroundStyle(self.viewModel.colors.foregroundColor)
+                .foregroundStyle(self.viewModel.colors.textColor)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .accessibilityIdentifier(AccessibilityIdentifier.text)
@@ -223,7 +223,7 @@ public struct SparkTag<Label>: View where Label: View {
             height: self.viewModel.height,
             relativeTo: .title3
         )
-        .background(self.viewModel.colors.backgroundColor.color)
+        .background(self.viewModel.colors.backgroundColor)
         .sparkBorder(
             width: self.viewModel.border.width,
             radius: self.viewModel.border.radius,

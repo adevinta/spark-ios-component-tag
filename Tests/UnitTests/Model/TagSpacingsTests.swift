@@ -6,19 +6,20 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import SparkComponentTag
 
-final class TagSpacingsTests: XCTestCase {
+struct TagSpacingsTests {
 
     // MARK: - Tests
 
+    @Test
     func test_default_values() {
         // GIVEN / WHEN
         let spacings = TagSpacings()
 
         // THEN
-        XCTAssertEqual(spacings.horizontalPadding, 0)
-        XCTAssertEqual(spacings.horizontalSpacing, 0)
+        #expect(spacings.horizontalPadding == 0)
+        #expect(spacings.horizontalSpacing == 0)
     }
 }

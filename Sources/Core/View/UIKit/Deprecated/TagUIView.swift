@@ -349,7 +349,7 @@ public final class TagUIView: UIView {
 
     private func reloadTextStyle() {
         self.textLabel.font = self.theme.typography.captionHighlight.uiFont
-        self.textLabel.textColor = self.colors.foregroundColor.uiColor
+        self.textLabel.textColor = self.colors.textColor.uiColor
     }
 
     private func reloadUIFromTheme() {
@@ -373,7 +373,7 @@ public final class TagUIView: UIView {
         self.setBorderColor(from: self.colors.borderColor)
 
         // Subviews
-        self.iconImageView.tintColor = self.colors.foregroundColor.uiColor
+        self.iconImageView.tintColor = self.colors.iconColor.uiColor
         self.reloadTextLabel()
     }
 

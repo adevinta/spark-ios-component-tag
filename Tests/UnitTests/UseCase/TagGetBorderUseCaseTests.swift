@@ -6,25 +6,21 @@
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import SparkComponentTag
 @_spi(SI_SPI) import SparkThemingTesting
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonTesting
 
-final class TagGetBorderUseCaseTests: XCTestCase {
+struct TagGetBorderUseCaseTests {
 
     // MARK: - Properties
 
-    private var theme = ThemeGeneratedMock.mocked()
-
-    override func tearDown() {
-        super.tearDown()
-
-    }
+    private let theme = ThemeGeneratedMock.mocked()
 
     // MARK: - Tests
 
+    @Test
     func test_execute_with_medium_size() {
         // GIVEN
         let useCase = TagGetBorderUseCase()
@@ -36,10 +32,11 @@ final class TagGetBorderUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(border.width, self.theme.border.width.small)
-        XCTAssertEqual(border.radius, self.theme.border.radius.small)
+        #expect(border.width == self.theme.border.width.small)
+        #expect(border.radius == self.theme.border.radius.small)
     }
 
+    @Test
     func test_execute_with_large_size() {
         // GIVEN
         let useCase = TagGetBorderUseCase()
@@ -51,7 +48,7 @@ final class TagGetBorderUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(border.width, self.theme.border.width.small)
-        XCTAssertEqual(border.radius, self.theme.border.radius.small)
+        #expect(border.width == self.theme.border.width.small)
+        #expect(border.radius == self.theme.border.radius.small)
     }
 }
